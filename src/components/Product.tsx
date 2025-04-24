@@ -1,5 +1,6 @@
 import { CSSProperties } from "react"
 import Button from "./Button"
+import { useProductContext } from '../context/ProductContext'
 
 export interface IProduct{
     id?: number,
@@ -9,8 +10,8 @@ export interface IProduct{
 
 const productStyle: CSSProperties = {
     border: `1px solid black`,
-    width: 100,
-    height:100,
+    width: 120,
+    height:120,
     padding: 5,
     borderRadius: 10,
     display: 'flex',
@@ -22,11 +23,13 @@ const productStyle: CSSProperties = {
 
 export default function Product (props:IProduct){
     const {id,productName,productQty} = props
+    const { addProduct, removeProduct } = useProductContext()
     return(
         <div style={productStyle}>
             <p>Name: {productName} </p>
             <p>Qte: {productQty} </p>
-            <Button disabled={false} title="Add Product" onClick={()=>({id, productName,productQty})}/>
+            <Button disabled={false} title="Add Product" onClick={() => addProduct({ id, productName, productQty })}/>
+            <Button disabled={false} title="remove Product" onClick={() => removeProduct({ id, productName, productQty })}/>
         </div>
     )
 }

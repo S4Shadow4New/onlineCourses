@@ -77,5 +77,6 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
 
 export const useProductContext = () => {
   const context = useContext(ProductContext)
+  if (!context) throw new Error(`Erreur d'utilisation du useProductContext`)
   return context
 }

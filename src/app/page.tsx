@@ -3,6 +3,7 @@
 import { IProduct } from "@/components/Product"
 import { ShowProduct } from "@/components/ShowProduct"
 import Store from "@/components/Store"
+import { ProductProvider } from "@/context/ProductContext"
 
 
 //Composants produits+ Button add product
@@ -19,13 +20,17 @@ const productList: IProduct[] = [
 
 export default function MyApp() {
   return(
-    <div style={{gap: 50,  flexDirection: 'column', display: 'flex'}}>
-      <Store />
-      <div>
+    <ProductProvider>
 
-        <p> Product List</p>
-        <ShowProduct productList={productList} />
+      <div style={{gap: 50,  flexDirection: 'column', display: 'flex'}}>
+        <Store />
+        <div>
+
+          <p> Product List</p>
+          <ShowProduct productList={productList} />
+        </div>
       </div>
-    </div>
+      
+    </ProductProvider>
   )
 }
