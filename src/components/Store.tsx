@@ -1,4 +1,4 @@
-// Store.tsx
+
 import { useProductContext } from '../context/ProductContext'
 import Button from './Button'
 import { ShowProduct } from './ShowProduct'

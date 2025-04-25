@@ -17,38 +17,30 @@ const stateReducer = (state: IStoreState, action: productAction): IStoreState =>
     case "reset":
       return initialize
     case "addProduct":
-      const existProduct = state.products.find((product)=> product.id === action.payload.id)
-      if(existProduct){
-        const updatedProducts = state.products.map((product)=>{
-          if(product.id === action.payload.id){
-            return {...product, productQty: product.productQty + 1}
-          }else{
-            return product
-          }
-        })
-        return {...state, products: updatedProducts}
+      const {id} = action.payload
+      const index = state.products.findIndex((product)=> product.id === id)
+      if(index !== -1){
+          const updatePlusOne = [...state.products]
+          updatePlusOne[index] = {...updatePlusOne[index], productQty: updatePlusOne[index].productQty + 1}   
+          return{...state, products: updatePlusOne}
       }else{
-        return {
-          ...state,
-          products:[...state.products, {...action.payload, productQty: 1}]
-        }
+          return{...state, products: [...state.products, {...action.payload, productQty: 1}]}
       }
-    case "removeProduct":
-      const findProduct = state.products.find((product)=> product.id === action.payload.id)
-      if(findProduct  && findProduct.productQty > 1){
-        const removeProducts = state.products.map((product) => {
-            if(product.id === findProduct.id){
-              return {...product, productQty: product.productQty - 1}
-            }
-            else{
-              return product
-            }
-        })
-        return {...state, products: removeProducts}
-      }
-      else if(findProduct && findProduct.productQty === 1){
-        const removeSelectProduct = state.products.filter((product)=> product.id !== action.payload.id)
-        return {...state, products: removeSelectProduct}
+  case "removeProduct":
+      const {id: idProductPayload} = action.payload
+      const findProductIndex = state.products.findIndex((product)=> product.id === idProductPayload)
+      const selectProduct = state.products[findProductIndex]
+
+      if(findProductIndex !== -1 && selectProduct.productQty === 1 ){
+          const removeProduct = [...state.products]
+          removeProduct.splice(findProductIndex, 1)
+          return{...state, products: removeProduct}
+      }else if (findProductIndex !== -1 && selectProduct.productQty > 1){
+          const discountQty = [...state.products]
+          discountQty[findProductIndex] = {...discountQty[findProductIndex], productQty: discountQty[findProductIndex].productQty - 1}
+          return {...state, products: discountQty}
+      }else{
+          return state
       }
     default:
       return state
