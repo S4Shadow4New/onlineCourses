@@ -8,6 +8,7 @@ import {z} from 'zod'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { signUp } from '@/lib/services/auth-service'
+/* import { useRouter } from 'next/navigation' */
 
 export const formSchema = z.object({
   username: z.string().min(3,{
@@ -21,6 +22,8 @@ export const formSchema = z.object({
 
 const formFields = [
   { name: "username", label: "Username", type: "text", placeholder: "username" },
+  { name: "prénom", label: "prénom", type: "text", placeholder: "prénom" },
+/*   { name: "Etablissement", label: "Etablissement", type: "text", placeholder: "Etablissement" }, */
   { name: "email", label: "Email", type: "email", placeholder: "email@example.com" },
   { name: "password", label: "Mot de passe", type: "password", placeholder: "••••••••" },
 ];
@@ -28,6 +31,9 @@ const formFields = [
 
 
 const Signup = () => {
+
+/*   const router = useRouter() */
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues:{
@@ -81,6 +87,8 @@ const Signup = () => {
 
         </form>
       </Form>
+{/*       <p>Déjà inscrit? Connectez vous</p>
+      <Button onClick={()=> router.push("/login")}>Se connecter</Button> */}
     </div>
 
     )
